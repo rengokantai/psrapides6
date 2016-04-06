@@ -37,6 +37,120 @@ others
 ...a.values()  //10,20,30
 ```
 ######ArrayBuffers and Typed arrays
+```
+let c =ArrayBuffer(1024);
+c.byteLength  //1024
+c[0]=0xff
+c[0] //255
+```
+Alltypes:
+Int8Array() Uint8Array() Uint8ClampedArray() Int32Array Uint32Array Int16Array Unit16Array  
+Float32Array Float64Array
+```
+let a =new Uint8Array(c)
+a[0]=0xff  //255
+let a =new Int8Array(c)
+a[0]=0xff  //-1
+```
+```
+let a =new Uint8ClampedArray(c)
+a[0]=-100 //0
+a[0]=300  //255        //only 0-255 allowed
+```
+buffer share
+```
+var a = new ArrayBuffer(1024);
+undefined
+var b = new Uint16Array(a);
+undefined
+var c = new Uint8Array(a);
+undefined
+b[0]=1;
+1
+c[0]
+1
+c[1]=1;
+1
+b[0]
+256
+```
+######big endian(most significant byte store first)
+```
+let dv = new DataView(a)
+dv.byteLength   //1024
+let dv = new DataView(a,0,10)
+dv.byteLength   //10
+```
+
+```
+let dv = new DataView(a)
+dv.setUint8(0,1)   //set 1 at index 0
+dv.getUnit16(0)  //256     //big endian.
+
+let dv = new DataView(a)
+dv.setUint8(0,1)   //set 1 at index 0
+dv.getUnit16(0,true)  //256     //little endian.   //browser default
+```
+######map and weakmap
+```
+var p ={c:1}
+let ps = new Map();
+ps.set(p,'x');
+ps.get(p) //x
+ps.size
+ps.clear
+```
+using arrays
+```
+let arr =[[p,'x'],[q,'y']]
+let ps =new Map(arr)
+ps.size  //2
+ps.has(p)
+...ps.values()
+...ps.entries()
+```
+weakmap
+```
+p=null;
+ps.size //undefined
+```
+
+######set and weakset
+```
+let se = new Set()
+let arr = new Set(['s','r'])
+se.add('x')
+se.has('x')
+let obj=new Set([{i:1},{i:1}])  //size=2 different objects!
+```
+We cannot add pri types in weakset.
+```
+let arr = new WeakSet(['s','r'])  //error
+let obj=new WeakSet([{i:1},{i:1}])  
+obj.size //undefined
+obj.has({i:1}) //true
+```
+
+######subclassing
+```
+class Parent extends Array{
+  sum(){
+    let t=0;
+    this.map(v=>t+v;);
+    return t;
+  }
+}
+let a = Parent.from([1,2])
+a instanceof Parent  //true
+a.length //2
+let r = a.reverse()
+r instanceof Parent //true
+r instanceof Array //true
+a.sum() //3
+```
+
+
+
 
 #####The Reflect API
 ######Construction and Method
