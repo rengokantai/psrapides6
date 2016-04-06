@@ -67,6 +67,52 @@ var c ={}
 Object.assign(c,a,b);  
 console.log(c)  {x:1,y:1}
 ```
+but not applicable if is not enumerable
+```
+var a ={x:1}
+var b= {y:1}
+Object.defineProperty(b,'z',{
+  value:1,
+  enumberable:false
+});
+var c ={}
+Object.assign(c,a,b);  
+console.log(c)  {x:1,y:1}
+```
+And not walk prototype
+```
+var a ={x:1}
+var b= {y:1}
+var p ={z:1}
+ Object.setPrototype(b,p);
+var c ={}
+Object.assign(c,a,b);  
+console.log(c)  {x:1,y:1}
+```
+Object.is
+```
+Object.is(NaN,NaN) //true
+0===-0
+Object.is(0,-0) false
+```
+######String extension
+startsWith endsWith includes  
+```
+"\u{12345}".length  //2 (emoji)
+var str="\u{12345}\u{54321}";
+console.log(Array.from(str).length  //3
+```
+codePointAt
+```
+var s = "aaaaaaa\u0301n";
+console.log(s.normalize.codePointAt(7).toString(16));  //6e
+string.fromCodePoint(0x12345);
+String.raw`\u{12345}` //\u{12345}  not translate
+```
+repeat
+```
+console.log('x'.repeat(10))  //xxxxxxxxxx
+```
 
 
 #####Iterators,Generators
