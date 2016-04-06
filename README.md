@@ -1,6 +1,15 @@
 #### psrapides6
 #####The Reflect API
-######Construction and Method]
+######Construction and Method
+Ex0 construct
+```
+class Parent{
+  constructor(){
+    console.log(`${a}`);
+  }
+}
+let r = Reflect.construct(Parent,['time']) //time
+```
 Ex1
 ```
 class R{
@@ -146,6 +155,7 @@ Reflect.defineProperty(r,'c',{
 console.log(p['c']); //10
 ```
 Ex9 deleteProperty
+```
 let o = {c:10};
 Reflect.deleteProperty(o,'c');
 consolw.log(o.c);  //undefined
@@ -172,4 +182,77 @@ c:10}
 Reflect.preentExtensions(parent);
 parent.d=20;
 console.log(Reflect.isExtensible(parent)); //false
+```
+#####The Proxy API
+######Get by Proxy
+Ex1 
+```
+function Parent(){
+  this.c ="str";
+}
+var p = new Parent();
+var proxy = new Proxy(p,{
+  get:function(target,prop,receiver){
+    return "I want" +prop;
+  }
+});
+console.log(proxy.name); //I want str
+```
+Ex2 Reflect.get
+```
+function Parent(){
+  this.c ="str";
+}
+var p = new Parent();
+var proxy = new Proxy(p,{
+  get:function(target,prop,receiver){
+    return Reflect.get(target,prop,receiver);
+  }
+});
+console.log(proxy.c); //str
+```
+Ex3 denied
+```
+function Parent(){
+  this.c ="str";
+  this.d="s";
+}
+var p = new Parent();
+var proxy = new Proxy(p,{
+  get:function(target,prop,receiver){
+    if(prop=='d')
+      return 'wrong!';
+    return Reflect.get(target,prop,receiver);
+  }
+});
+console.log(proxy.d); //wrong
+```
+######calling functions by proxy
+```
+function c(){
+  return 1;
+}
+var proxy = new Proxy(c,{
+  apply:function(target,prop,arg){
+    return Reflect.apply(target,prop,arg);
+  }
+});
+console.log(proxy());  //1
+```
+######A Proxy as a prototype
+```
+var parent={c:10}
+var proxy=new Proxy({},{get:function(target,prop,receiver){return prop+"not exist";}});
+Object.setPrototypeOf(parent,proxy);
+console.log(parent.c);  //10
+console.log(parent.d);  //d not exist
+```
+######Revocable proxies
+Ex1 revocable
+```
+var parent={c:10}
+var {proxy,revoke}=Proxy.revocable(c,{get:function(target,prop,receiver){return Reflect.get(target,prop,receiver}+10}});
+console.log(proxy.c);  //10
+revoke();
+console.log(proxy.c);   //not exist
 ```
