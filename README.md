@@ -11,7 +11,7 @@ let val = a[Symbol.iterator]();
 val.next()   //{done:false,value:1}
 ```
 
-manually use
+infinite iterator
 ```
 let p = { 
   [Symbol.iterator](){
@@ -30,7 +30,7 @@ p[Symbol.iterator]()   //
 p.next.value() //1
 p.next.value() //2
 ```
-This iterator is infinite.
+add a break
 ```
 for(let i of p){if(i>3)break; console.log(i);}
 ```
@@ -58,7 +58,124 @@ let a =[1,2,3]
 function p(a,b,c){console.log(c)};
 p(...a);  //3
 ```
+######Generators
+```
+function *x(){
+  yield 1;
+  yield 2;
+}
+let y =x();
+y.next();  //1
+```
+infinite yield
+```
+function *x(){
+  let id =1;
+  while(true)yield(id++);
+}
+let y =x();
+y.next();  //1
+```
+add a break
+```
+for(let i of x()){
+  if(i>3)break;
+  console.log(i);
+}
+```
+######Yielding in generators
+assign yield
+```
+function *x(){
+  let res = yield;
+  console.log(`${res}`);
+}
+let y =x();
+t.next();   //kill off generator.
+t.next(100);  //100
+consloe.log(t.next(100));    //done,true....   
+```
+yield second element
+```
+function *x(){
+  let res = [yield,yield,yield];
+  console.log(res[2]);
+}
+let y=x();
+y.next();
+y.next(1);
+y.next(2);
+y.next(3);  //this will print
+```
+yield has very low precedence
+```
+function *x(){
+  let res = 4*(yield 100);
+  console.log(res);
+}
+let y = x();
+y.next();  //100 will be discarded
+y.next(4); //return 16
+```
+yidle pri and array
+```
+function *x(){
+  yield 1;
+  yield [1,2,3];
+}
+let y = x();
+y.next().value;  //return 1
+y.next().value; //return [1,2,3]
+```
+splash array
+yidle pri and array
+```
+function *x(){
+  yield 1;
+  yield* [1,2,3];   //iterator delegation
+}
+let y = x();
+y.next().value;  //return 1
+y.next().value; //return 1
+y.next().value; //return 2
+y.next().value; //return 3
+```
 
+######throw and return
+Ex 1
+```
+function *x(){
+  try{
+    yield 1;
+    yield 2;
+  }
+  catch(e){
+  
+  }
+}
+let y = x();
+console.log(y.next().value);
+console.log(y.throw('wrong'));  //generator completed. done:true
+console.log(y.next());    //done:true
+}
+```
+######More Promise
+Promise.all
+```
+let a = new Promise();
+let b = new Promise();
+Promise.all([a,b]).then(function(value){console.log(value)},function(reason){console.log(reason)});
+//assume a resolve 3 sec, b resolve 5 sec   //(after 5 sec)
+//assume a resolve 1 sec, b reject 2 sec  //(rej after 2 sec)
+//assume a reject 1 sec, b reject 2 sec //(rej after 1 sec) (reject fast)
+```
+Promise.race
+```
+Promise.race([a,b]).then(function(value){console.log(value)},function(reason){console.log(reason)});
+//assume a resolve 3 sec, b resolve 5 sec   //(after 3 sec)
+//assume a resolve 3 sec, b reject 2 sec  //(rej after 2 sec)
+//assume a resolve 1 sec, b reject 2 sec  //(after 1 sec)
+```
 #####Arrays and Collections
 ######Array Extensions
 ```
