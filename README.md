@@ -1,4 +1,112 @@
 #### psrapides6
+#####New ES6 syntax
+######let
+let does not allow hoisting.
+######arrow function
+```
+document.addEventListener('click',()=>console.log(this)); //window  
+```
+arrow function is not set to the element that getting the event,context that the code run.  
+
+Ex2
+```
+var f={
+a:10,
+g:function(){
+    console.log(this):
+  }
+};
+f.g();  // Object{a:10}
+```
+Ex2 using arrow
+```
+var f={
+a:10,
+g:()=>console.log(this)
+};
+f.g();  // window{..}
+```
+You can not bind a arrow funciton to new obj.
+
+######Defalt Function Parameters
+```
+var f = function(a,b=3){console.log(argument.length};  //1
+f(1);
+```
+some quirky:
+```
+var x = function(a=b,b=1){};
+x()  //error
+var x = function(a=b,b=1){};
+x(1)  //ok
+```
+using Function class
+```
+var f = new Function("a=10","return a");
+console.log(f()); //10
+```
+######Rest and Spread
+```
+var f = function(a,...b){}
+console.log(f.length) //1
+```
+```
+var arr = Array(...[,,]);  //Or
+var arr = [...[,,]];
+console.log(arr);   //[undefined,undefined]
+Math.max(..."123")  //3
+["A",..."BC"]  //A B C
+```
+######Object Literal Extensions
+Note function literal will point to locattion, not execution scope
+```
+var a=1;
+var f ={
+  a:2,
+  g(){
+    return this.a
+  }
+}
+console.log(f.g()) //1 not2
+```
+
+dynamic field
+```
+var fi = 'dynamic';
+var ni = 1;
+var p = {[fi]:ni};
+console.log(p);  //dynamic:1
+```
+######Template Literals
+interpolation have priority.
+```
+function show(s){ let x ="100"; console.log(s)}
+let x = "200";
+show(`string is : ${x}`);  //200
+```
+This will be a array
+```
+function x(s){console.log(s);}
+x `a`;
+```
+pass value
+```
+function multi(a,...b){
+  console.log(a);     //["start: ", "End: ",""]
+  console.log(b);     // [1,2]
+}
+let x=1;
+let y=2;
+multi `Start: ${x} End:  ${y}`;
+```
+
+######Destructing
+```
+let all=[a,b,c];
+let [d,e,f]=all;   //Or let [d,,f]  Or  let [d,...e]
+console(e); //b
+```
+
 #####ES6 Modules and Classes
 ######named exports in mudules
 We cannot change var.  
