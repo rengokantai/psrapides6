@@ -1,4 +1,71 @@
 #### psrapides6
+#####ES6 Modules and Classes
+######named exports in mudules
+We cannot change var.  
+file1.js
+```
+import{x}from 'file2.js'
+x=3;  //illegal.
+```
+file2.js
+```
+export let x=1;
+```
+But we can change a property in objects;
+file1.js
+```
+import{x}from 'file2.js'
+x.y=3;  //legal.
+```
+file2.js
+```
+export let x={
+  y:1
+};
+```
+change property.
+file1.js
+```
+import{x}from 'file2.js'
+x.y=3;  //legal.
+```
+file2.js
+```
+export let x={
+  y:1
+};
+```
+######Class fundamentals
+function
+```
+function x(){}
+x===window.x  //true
+class x{}
+x===window.x //false
+```
+######extends and super
+super can be used in object literals
+```
+let p = { g(){return 1;}};
+let q ={ g(){return super.g()+1;}};
+Object.setPrototypeOf(q,p);
+console.log(q.g()); //2
+```
+######new.target
+```
+class X{
+  constructor(){
+    console.log(typeof new.target);    //function ->constructor
+  }
+}
+var x = new X();
+class Y extends X{
+  constructor(){
+    super()
+  }
+}
+var x = new Y(); //  constructor(){super()}
+```
 #####New Types and Object
 ######Symbols
 intro
@@ -113,7 +180,58 @@ repeat
 ```
 console.log('x'.repeat(10))  //xxxxxxxxxx
 ```
+######Number Extensions
+```
+Number.parseInt === parseInt  //true
+isNaN('NaN') //true
+Number.isNaN('NaN') //false
+isFinite('1') //true
+Number.isFinite('1') //false
+Number.isInteger(NaN)
+Number.isInteger(Infinity)
+Number.isInteger(undefined)
+Number.isInteger(12.3)   //all false
+Number.isSafeIntefer(Math.pow(2,53)) //False max=2^53-1
+```
+######math
+cosh acosh......  
+log2 log10 imul log1p....  
+sign
+```
+Math.sign(0)  //0
+Math.sign(-0)  //-0
+Math.sign(-20)  //-1
+Math.sign(NaN)  //NaN
+```
+trunc
+```
+trunc(22.2)  //22
+trunc(-22.2)  //22
+```
+######RegExp
+new flag `u`
+```
+let a = /\u{12345}/
+let b = /\u{12345}/u
+a.test('emoji') //false
+b.test('emoji') //true
+b.flags //u     //order = gimuy
+```
+new flag `y`
+[see here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/sticky)
 
+######Function Extension
+fn name
+```
+let x =function y(){}
+console.log(x.name) //y
+let x =function(){}
+console.log(x.name) //x
+let x =function(){}
+let z = x;
+console.log(z.name) //x
+```
+fnname is not writable but is configurable with Object.defineProperty
 
 #####Iterators,Generators
 ######Iterators
