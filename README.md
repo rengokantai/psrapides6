@@ -127,7 +127,17 @@ assign alias, but the order is reversed
 let{x:newx,y:newy,z:newz}=o;
 console.log(newx);
 ```
-
+######Advanced Descructuring
+Ex1
+```
+let[a,b]=[,];
+console.log(`${a}${b}`)
+```
+This is illegal:
+```
+let[a,b]=undefined;
+....
+```
 #####ES6 Modules and Classes
 ######named exports in mudules
 We cannot change var.  
