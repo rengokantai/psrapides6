@@ -1,4 +1,33 @@
 #### psrapides6
+#####New Types and Object
+######Symbols
+intro
+```
+let sy = Symbol('r');
+console.log(typeof sy);  //Symbol
+sy.toString()  //Symbol(r)
+Symbol('x')===Symbol('x') //false
+Symbol.for('x')===Symbol.for('x') //true
+```
+keyFor
+```
+let p = Symbol.for('r');
+let dest = Symbol.keyFor(p);
+console.log(dest);  //r
+```
+use as a key
+```
+let p={
+  a:'s',
+  [Symbol.for('x')]:'str'
+}
+let val = p[Symbol.for('x')];
+console.log(val); //str
+Object.getOwnPropertyNames(p)  //only a
+Object.getOwnPropertySymbols(p) //[Symbol(x)]
+```
+
+
 #####Iterators,Generators
 ######Iterators
 ```
