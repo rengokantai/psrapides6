@@ -1,4 +1,43 @@
 #### psrapides6
+#####Arrays and Collections
+######Array Extensions
+```
+let x = Array.of(10)   //length:1
+let a = [10,20,30];
+let b = Array.from(a,v=>v+10);
+console.log(b); //20,30,40
+```
+Or another syntax
+```
+let b = Array.from(a,function(v){return v+this.amount},{amount:10});    //v=>v+this.amount will return NaN,NaN, WRong!!!
+console.log(b) //20,30,40
+```
+fill and find
+```
+let c = a.fill(30) //30,30,30
+let c = a.fill(30,1) //start at index 1  so  10,30,30
+let c = a.fill(30,1,2) //start at index 1,end at index 2(excluded)  so  10,30,10
+let c = a.fill(30,-1) //start at index -1  so  10,20,30
+let c = a.find(v=>v>20)  //30
+```
+findIndex
+```
+let c = a.findIndex(function(val,idx,arr){return val=this},10); //0
+```
+copyWithin
+```
+let c=a.copyWithin(2,0)   //hard to memorize  params:(targetidx->end,resourceidx)     //10,20,10
+let c=a.copyWithin(0,1)  //20,30,30
+[1,2,3,4,5].cppyWitnin(3,0,2)=[1,2,3,1,2]
+```
+others
+```
+...a.entries() // [0,10],[1,20],[2,30]
+...a.keys()   //0,1,2
+...a.values()  //10,20,30
+```
+######ArrayBuffers and Typed arrays
+
 #####The Reflect API
 ######Construction and Method
 Ex0 construct
