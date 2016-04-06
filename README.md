@@ -26,6 +26,47 @@ console.log(val); //str
 Object.getOwnPropertyNames(p)  //only a
 Object.getOwnPropertySymbols(p) //[Symbol(x)]
 ```
+######well known
+Ex1 Symbol.toStringTag
+```
+let Parent = function(){}
+let p =new Parent();
+console.log(p.toString()); //object Object
+Parent.prototype[Symbol.toStringTag]='parent';
+console.log(p.toString()); //object parent
+```
+Ex2 Symbol.isConcatSpreadable
+```
+let arr =[1,2,3];
+console.log([].concat(arr)) //[1,2,3]
+arr[Symbol.isConcatSpreadable]=false;
+console.log([].concat(arr)) //[[1,2,3]]
+```
+Ex3
+```
+let arr=[1,2,3]
+let s = att+100
+console.log(s)  //1,2,3100
+arr[Symbol.toPrimitive]=function(h){
+  return 10;
+}
+console.log(s)  //103
+```
+######Object.setPrototypeOf
+```
+var a ={x:1}
+var b= {y:1}
+Object.setPrototypeOf(a,b) //b is parent class
+a.y  //1
+```
+######Object.assign
+```
+var a ={x:1}
+var b= {y:1}
+var c ={}
+Object.assign(c,a,b);  
+console.log(c)  {x:1,y:1}
+```
 
 
 #####Iterators,Generators
