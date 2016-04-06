@@ -102,9 +102,30 @@ multi `Start: ${x} End:  ${y}`;
 
 ######Destructing
 ```
-let all=[a,b,c];
-let [d,e,f]=all;   //Or let [d,,f]  Or  let [d,...e]
-console(e); //b
+let all=['a','b','c'];
+let [d,e,f]=all;   //Or let [d,,f]  Or  let [d,...e] Or let[d,e,f=10]
+console(e); //'b'
+```
+call func with array param
+```
+function q([x,y]){console.log(y);}
+q([2,3function q([x,y]){console.log(y);}
+q(2,3);
+```
+This is incorrect:
+```
+function q([x,y]){console.log(y);}
+q(2,3);  //Error
+```
+Destructure objects:
+```
+let o ={a:'a',b:'b',c:'c'};
+let {x,y,z}=o;
+console.log(z);
+```
+assign alias, but the order is reversed
+let{x:newx,y:newy,z:newz}=o;
+console.log(newx);
 ```
 
 #####ES6 Modules and Classes
