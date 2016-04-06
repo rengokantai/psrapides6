@@ -1,4 +1,64 @@
 #### psrapides6
+#####Iterators,Generators
+######Iterators
+```
+let a=[1,2,3]
+typeof a[Symbol.iterator] //function
+```
+use it.
+```
+let val = a[Symbol.iterator]();
+val.next()   //{done:false,value:1}
+```
+
+manually use
+```
+let p = { 
+  [Symbol.iterator](){
+    let next=1;
+    return{
+      next(){
+        return {
+          value:next++,
+          done:false
+        };
+      }
+    };
+  }
+};
+p[Symbol.iterator]()   //
+p.next.value() //1
+p.next.value() //2
+```
+This iterator is infinite.
+```
+for(let i of p){if(i>3)break; console.log(i);}
+```
+
+Or, rewrite the above iterator
+```
+let p = { 
+  [Symbol.iterator](){
+    let next=1;
+    return{
+      next(){
+        return {
+          let value = next>2?undefined:next++;
+          let done=!value;
+          return{value,done};
+        };
+      }
+    };
+  }
+};
+```
+splash
+```
+let a =[1,2,3]
+function p(a,b,c){console.log(c)};
+p(...a);  //3
+```
+
 #####Arrays and Collections
 ######Array Extensions
 ```
