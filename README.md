@@ -124,6 +124,7 @@ let {x,y,z}=o;
 console.log(z);
 ```
 assign alias, but the order is reversed
+```
 let{x:newx,y:newy,z:newz}=o;
 console.log(newx);
 ```
